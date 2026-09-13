@@ -1,0 +1,18 @@
+{
+  "name": "templates_preview_v2",
+  "description": "Preferred CapCut template renderer. Call once only after capcut_template_search_poll_v2 returns a non-empty succeeded result. Pass only the same canonical search_id; the server resolves the stored result snapshot. Never pass templates, media URLs, or a reconstructed poll result.",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "search_id": {
+        "description": "Canonical search ID returned by capcut_template_search.",
+        "maxLength": 36,
+        "minLength": 36,
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        "type": "string"
+      }
+    },
+    "required": ["search_id"],
+    "type": "object"
+  }
+}

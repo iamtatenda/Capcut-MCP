@@ -1,0 +1,109 @@
+{
+  "name": "templates_preview",
+  "description": "Legacy compatibility renderer for clients that pass a complete poll result. Copy the exact non-empty successful structured result returned by capcut_template_search_poll into result without abbreviating, truncating, summarizing, omitting, or rewriting any field or URL query parameter. New clients must use templates_preview_v2.",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "result": {
+        "additionalProperties": false,
+        "description": "Required exact successful result returned by capcut_template_search_poll. Copy the structured result verbatim: never abbreviate, truncate, summarize, omit, or rewrite any field. Preserve every URL and its complete query string, including x-expires and x-signature parameters. It must contain at least one template.",
+        "properties": {
+          "conversation_id": { "type": "string" },
+          "error": { "type": "string" },
+          "next_action": {
+            "description": "Next action: poll_result while running, or none after the search reaches a terminal status.",
+            "type": "string"
+          },
+          "next_poll_after_ms": { "type": "integer" },
+          "search_id": { "type": "string" },
+          "status": {
+            "description": "Current search status: running, succeeded, or failed.",
+            "type": "string"
+          },
+          "templates": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "author": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "avatar_url": { "type": "string" },
+                    "name": { "type": "string" },
+                    "web_uid": { "type": "string" }
+                  },
+                  "required": ["web_uid", "name", "avatar_url"],
+                  "type": "object"
+                },
+                "cover_height": { "type": "integer" },
+                "cover_url": {
+                  "description": "Copy the complete signed cover URL verbatim, including every query parameter such as x-expires and x-signature.",
+                  "type": "string"
+                },
+                "cover_urls": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "large": { "type": "string" },
+                    "medium": { "type": "string" },
+                    "small": { "type": "string" }
+                  },
+                  "required": ["small", "medium", "large"],
+                  "type": "object"
+                },
+                "cover_width": { "type": "integer" },
+                "create_time": { "type": "integer" },
+                "duration": { "type": "integer" },
+                "dynamic_cover_url": { "type": "string" },
+                "favorite_count": { "type": "integer" },
+                "fragment_count": { "type": "integer" },
+                "item_type": { "type": "integer" },
+                "like_count": { "type": "integer" },
+                "page_url": { "type": "string" },
+                "play_amount": { "type": "integer" },
+                "short_title": { "type": "string" },
+                "template_url": { "type": "string" },
+                "title": { "type": "string" },
+                "usage_amount": { "type": "integer" },
+                "vid": { "type": "string" },
+                "video_dynamic_cover_url": { "type": "string" },
+                "video_url": { "type": "string" },
+                "web_id": { "type": "string" }
+              },
+              "required": [
+                "web_id",
+                "page_url",
+                "title",
+                "short_title",
+                "author",
+                "cover_url",
+                "cover_width",
+                "cover_height",
+                "cover_urls",
+                "video_url",
+                "duration",
+                "template_url",
+                "fragment_count",
+                "usage_amount",
+                "play_amount",
+                "like_count",
+                "favorite_count",
+                "create_time",
+                "item_type",
+                "vid",
+                "dynamic_cover_url",
+                "video_dynamic_cover_url"
+              ],
+              "type": "object"
+            },
+            "type": ["null", "array"]
+          },
+          "terminal": { "type": ["null", "boolean"] },
+          "total": { "type": "integer" }
+        },
+        "required": ["search_id", "status", "total", "templates"],
+        "type": "object"
+      }
+    },
+    "required": ["result"],
+    "type": "object"
+  }
+}

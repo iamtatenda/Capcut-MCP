@@ -1,0 +1,5 @@
+{
+  "name": "capcut_ailab_get_plan_response_state",
+  "description": "Checks whether one exact editing-plan card already has a successfully submitted response. This tool is used only by the mounted plan card when it is restored.",
+  "parameters": null
+}

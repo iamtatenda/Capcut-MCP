@@ -1,0 +1,14 @@
+{
+  "description": "Configuration for Cursor (.cursor/mcp.json) or Windsurf (.codeium/windsurf/mcp_config.json)",
+  "mcpServers": {
+    "capcut_creation": {
+      "url": "https://www.capcut.com/api/external_mcp",
+      "headers": {
+        "Authorization": "Bearer <YOUR_CAPCUT_BEARER_TOKEN>"
+      }
+    },
+    "capcut_creation_resource": {
+      "url": "https://www.capcut.com/api/external_mcp/resource"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "description": "Configuration for Claude Desktop (~/Library/Application Support/Claude/claude_desktop_config.json or %APPDATA%\\Claude\\claude_desktop_config.json)",
+  "mcpServers": {
+    "capcut_creation": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://www.capcut.com/api/external_mcp",
+        "--header",
+        "Authorization: Bearer <YOUR_CAPCUT_BEARER_TOKEN>"
+      ]
+    },
+    "capcut_creation_resource": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://www.capcut.com/api/external_mcp/resource"
+      ]
+    }
+  }
+}

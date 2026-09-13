@@ -1,0 +1,20 @@
+{
+  "name": "capcut_report_event",
+  "description": "Reports one capability-bound CapCut Widget telemetry event with caller-provided event_name and params. This private tool does not mutate account data.",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "event_name": {
+        "description": "Required Mario event name.",
+        "type": "string"
+      },
+      "params": {
+        "additionalProperties": true,
+        "description": "Required Mario event parameters, including the server-issued tracking_capability.",
+        "type": "object"
+      }
+    },
+    "required": ["event_name", "params"],
+    "type": "object"
+  }
+}

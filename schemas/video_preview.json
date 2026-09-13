@@ -1,0 +1,65 @@
+{
+  "name": "video_preview",
+  "description": "Displays the completed video and its available editing destination. Use it when the editing task provides a completed video to show.",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "buttons": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "label": { "type": "string" },
+            "url": { "type": "string" }
+          },
+          "required": ["label", "url"],
+          "type": "object"
+        },
+        "type": ["null", "array"]
+      },
+      "context": {
+        "additionalProperties": false,
+        "properties": {
+          "event_id": {
+            "description": "Required source event ID for this card.",
+            "type": "integer"
+          },
+          "session_id": {
+            "description": "Required editing task session ID.",
+            "type": "string"
+          },
+          "tracking_capability": {
+            "description": "Opaque short-lived capability used only by mounted card telemetry.",
+            "type": "string"
+          }
+        },
+        "required": ["session_id", "event_id"],
+        "type": "object"
+      },
+      "resources": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "author": { "type": "string" },
+            "cover_url": { "type": "string" },
+            "duration_ms": { "type": "integer" },
+            "height": { "type": "integer" },
+            "kind": { "type": "string" },
+            "mime_type": { "type": "string" },
+            "resource_id": { "type": "string" },
+            "resource_type": { "type": "string" },
+            "size_bytes": { "minimum": 0, "type": "integer" },
+            "status": { "type": "string" },
+            "title": { "type": "string" },
+            "url": { "type": "string" },
+            "width": { "type": "integer" }
+          },
+          "required": ["kind"],
+          "type": "object"
+        },
+        "type": ["null", "array"]
+      }
+    },
+    "required": ["context", "resources"],
+    "type": "object"
+  }
+}

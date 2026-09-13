@@ -1,0 +1,23 @@
+{
+  "name": "capcut-mcp",
+  "version": "1.0.0",
+  "description": "CapCut MCP integration and video directing skills for AI coding agents",
+  "main": "skills/capcut-upload/scripts/capcut-upload.mjs",
+  "type": "module",
+  "scripts": {
+    "test:uploader": "node --check skills/capcut-upload/scripts/capcut-upload.mjs",
+    "upload": "node skills/capcut-upload/scripts/capcut-upload.mjs"
+  },
+  "keywords": [
+    "capcut",
+    "mcp",
+    "model-context-protocol",
+    "video-editing",
+    "ai"
+  ],
+  "author": "CapCut MCP Community",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

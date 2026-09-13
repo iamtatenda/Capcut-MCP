@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "capcut_creation": {
+      "serverUrl": "https://www.capcut.com/api/external_mcp",
+      "headers": {
+        "Authorization": "Bearer <YOUR_CAPCUT_BEARER_TOKEN>"
+      }
+    },
+    "capcut_creation_resource": {
+      "serverUrl": "https://www.capcut.com/api/external_mcp/resource"
+    }
+  }
+}

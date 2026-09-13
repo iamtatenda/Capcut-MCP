@@ -1,0 +1,20 @@
+{
+  "name": "capcut-mcp",
+  "version": "1.0.0",
+  "description": "CapCut MCP integration and video directing skills for AI coding agents. Edit footage with natural language, generate scene blueprints, and automate timelines.",
+  "author": {
+    "name": "CapCut MCP Community"
+  },
+  "license": "MIT",
+  "keywords": [
+    "capcut",
+    "mcp",
+    "video-editing",
+    "ai-video",
+    "timeline-automation",
+    "bytedance",
+    "antigravity",
+    "claude",
+    "cursor"
+  ]
+}

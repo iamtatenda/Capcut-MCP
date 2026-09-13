@@ -1,0 +1,48 @@
+{
+  "name": "editing_plan",
+  "description": "Displays an editing request and its available actions. Use it when task progress requires user input.",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {
+      "actions": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "label": { "type": "string" }
+          },
+          "required": ["label"],
+          "type": "object"
+        },
+        "type": ["null", "array"]
+      },
+      "context": {
+        "additionalProperties": false,
+        "properties": {
+          "event_id": {
+            "description": "Required source event ID for this card.",
+            "type": "integer"
+          },
+          "session_id": {
+            "description": "Required editing task session ID.",
+            "type": "string"
+          },
+          "tracking_capability": {
+            "description": "Opaque short-lived capability used only by mounted card telemetry.",
+            "type": "string"
+          }
+        },
+        "required": ["session_id", "event_id"],
+        "type": "object"
+      },
+      "prompt": {
+        "type": "string"
+      },
+      "state_capability": {
+        "description": "Opaque state capability returned with current plan cards. Older or degraded cards may omit it and rely on submission idempotency.",
+        "type": "string"
+      }
+    },
+    "required": ["context"],
+    "type": "object"
+  }
+}
