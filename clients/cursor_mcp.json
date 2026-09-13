@@ -9,6 +9,10 @@
     },
     "capcut_creation_resource": {
       "url": "https://www.capcut.com/api/external_mcp/resource"
+    },
+    "google-flow": {
+      "command": "python",
+      "args": ["google-flow-mcp/server.py"]
     }
   }
 }

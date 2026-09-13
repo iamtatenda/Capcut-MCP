@@ -1,60 +1,87 @@
 <div align="center">
   <img src="./assets/logo.svg" alt="CapCut MCP Logo" width="90" height="90" />
-  <h1>CapCut MCP</h1>
-  <p><strong>Direct video edits inside CapCut using plain conversational language.</strong></p>
-  <p>Turn raw footage into polished, broadcast-ready videos through your AI coding agent.</p>
+  <h1>CapCut & Google Flow MCP</h1>
+  <p><strong>Generate cinematic video assets and direct CapCut edits using plain conversational prompts.</strong></p>
+  <p>An end-to-end autonomous video studio inside your AI coding agent.</p>
 </div>
 
 ---
 
 ## What is this?
 
-Most AI video tools fall into two frustrating categories: gimmicky generators that produce surreal morphing clips, or complex video editors with hundreds of confusing timeline menus.
+Most AI video workflows force you to juggle fragmented tools: generating raw clips on web dashboards, manually downloading files, and fighting complex timeline menus in an editor.
 
-This repository packages the **CapCut Model Context Protocol (MCP)** together with the production directing skills that teach AI models how human editors actually cut footage.
+This repository combines two core systems into a single protocol:
+1. **Google Flow MCP**: Autonomous 16:9 cinematic video and image generation with camera motility, character continuity, and clean studio backdrops.
+2. **CapCut MCP & Directing Suite**: Autonomous timeline assembly, split-cut pacing, 2.5D depth layering, audio leveling, and local draft file automation.
 
-Connect this MCP to your favorite AI coding assistant (Google Antigravity, Claude Code, Claude Desktop, Cursor, Windsurf, or Cline). Point it at a folder of raw footage, describe the pacing and structure you want, and let the agent assemble the timeline, sync edits to vocal pauses, sandwich bold typography behind cutout subjects, and balance the sound mix.
-
----
-
-## What You Can Do
-
-- **Edit With Words**: Ask for a punchy 30-second teaser. The agent drafts a structured Scene Blueprint, uploads local footage, submits the cut to CapCut AI Lab, and returns the interactive review card.
-- **Directing Intelligence**: The included skills enforce professional cutting discipline. No robotic 2.5-second cuts on a rigid metronome, no whoosh spam on routine cuts, and no ugly karaoke subtitles clashing over title cards.
-- **Zero-Dependency Media Uploader**: Includes a standalone Node.js client (`skills/capcut-upload/scripts/capcut-upload.mjs`) that streams local `.mp4`, `.mov`, and images directly to ByteDance VOD and ImageX servers with chunking and CRC32 checks.
-- **Multimodal Template Discovery**: Feed an existing video or reference image to find matching CapCut templates, complete with signed cover previews and direct links.
-- **Desktop Draft Automation**: Reverse-engineers CapCut Desktop's local draft project structure (`draft_content.json`) on Windows and macOS for programmatic timeline assembly.
+Connect this package to your AI assistant (Google Antigravity, Claude Code, Claude Desktop, Cursor, Windsurf, or Cline). Describe your narrative, let the agent generate matching footage with Google Flow, push the files into CapCut, and receive a completed draft timeline ready for export.
 
 ---
 
-## 3-Minute Quickstart
+## Key Capabilities
 
-### Step 1: Clone the Repository
+- **Autonomous Generation (Google Flow)**: Prompt 16:9 cinematic b-roll, character plates on Royal Blue backdrops for clean chroma keys, and multi-shot continuous sequences via persistent Chrome DevTools Protocol.
+- **Edit With Words (CapCut AI Lab)**: Ask for a punchy 30-second commercial. The agent drafts a Scene Blueprint, ingests media, triggers the edit, and returns interactive review cards.
+- **Human Directing Standards**: Built-in skills enforce professional editing rules. No robotic 2.5-second cuts on a rigid clock, no whoosh spam on routine cuts, and no ugly karaoke subtitles clashing over title cards.
+- **One-Click Google Flow Auth**: A self-contained auth wizard (`setup_auth.bat` / `setup_auth.sh`) creates an isolated Chrome profile, lets you sign in once, and keeps your session ready for headless automation.
+- **Zero-Dependency Media Uploader**: Includes a standalone script (`skills/capcut-upload/scripts/capcut-upload.mjs`) that streams local `.mp4`, `.mov`, and images directly to ByteDance VOD and ImageX servers with chunking and CRC32 checks.
+- **CapCut Desktop Draft Automation**: Reverse-engineers local desktop projects (`draft_content.json`) on Windows and macOS for programmatic timeline manipulation.
+
+---
+
+## Quickstart
+
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/capcut-mcp.git
-cd capcut-mcp
+git clone https://github.com/iamtatenda/Capcut-MCP.git
+cd Capcut-MCP
 ```
 
-### Step 2: Grab Your CapCut Bearer Token (30 Seconds)
+### 2. Set Up Google Flow (Asset Generation)
 
-1. Open [capcut.com](https://www.capcut.com) in Chrome or Edge and sign in.
-2. Press `F12` (or right-click anywhere and select **Inspect**) to open Developer Tools.
-3. Switch to the **Network** tab and filter by `api`.
-4. Click into any project or folder on CapCut to trigger an API call.
-5. Click on any network request going to `capcut.com/api/...`. In the **Request Headers** section on the right, find `Authorization`.
-6. Copy everything after `Bearer ` (it will look like a long string of random characters).
+Google Flow handles video and image creation through a local background daemon. 
 
-> [!IMPORTANT]
-> **US IP Address Notice**: ByteDance restricts CapCut API access from US IP addresses. If you run your agent from the United States, route your connection through a VPN or proxy located in Canada, the UK, Europe, or Asia before calling the API.
+1. Install Python dependencies:
+   ```bash
+   pip install -r google-flow-mcp/requirements.txt
+   ```
+
+2. Run the one-time authentication wizard:
+   - **Windows**: Double-click `google-flow-mcp\setup_auth.bat` (or run `python google-flow-mcp/setup_auth.py`).
+   - **macOS / Linux**: Run `bash google-flow-mcp/setup_auth.sh` (or `python3 google-flow-mcp/setup_auth.py`).
+
+3. The wizard launches a dedicated Chrome instance at [labs.google/fx/tools/flow](https://labs.google/fx/tools/flow). Sign into your Google account (standard or Pro).
+4. Once you see the Google Flow project workspace, return to your terminal and press **Enter**.
+5. Your authentication session is saved to `.flow_profile/` in the repo root. You do not need to sign in again.
+
+> [!TIP]
+> You can launch the background daemon manually anytime using `google-flow-mcp\launch_daemon.bat` (or `launch_daemon.sh`). If the daemon is not running when an agent calls a generation tool, the MCP server starts it automatically.
 
 ---
 
-### Step 3: Connect to Your Agent
+### 3. Grab Your CapCut Token (Editing Suite)
 
-#### Option A: Google Antigravity / Gemini CLI
+1. Open [capcut.com](https://www.capcut.com) in your browser and sign in.
+2. Press `F12` (or right-click anywhere and select **Inspect**) to open Developer Tools.
+3. Switch to the **Network** tab and filter by `api`.
+4. Click into any project or folder on CapCut to trigger network activity.
+5. Click on any request going to `capcut.com/api/...`. Under **Request Headers**, find `Authorization`.
+6. Copy everything after `Bearer ` (a string of letters and numbers).
 
-Add the servers to `~/.gemini/config/mcp_config.json`:
+> [!IMPORTANT]
+> **US IP Notice**: ByteDance restricts CapCut API access from US IP addresses. If you run your agent from the United States, route your connection through a VPN or proxy in Canada, the UK, Europe, or Asia before calling the API.
+
+---
+
+## Client Setup
+
+Copy the configuration block for your tool:
+
+### Option A: Google Antigravity / Gemini CLI
+
+Add to `~/.gemini/config/mcp_config.json`:
 
 ```json
 {
@@ -67,21 +94,18 @@ Add the servers to `~/.gemini/config/mcp_config.json`:
     },
     "capcut_creation_resource": {
       "serverUrl": "https://www.capcut.com/api/external_mcp/resource"
+    },
+    "google-flow": {
+      "command": "python",
+      "args": ["google-flow-mcp/server.py"]
     }
   }
 }
 ```
 
-Or run the CLI command:
+### Option B: Claude Desktop
 
-```bash
-agy mcp add --header "Authorization: Bearer YOUR_CAPCUT_BEARER_TOKEN" capcut_creation https://www.capcut.com/api/external_mcp
-agy mcp add capcut_creation_resource https://www.capcut.com/api/external_mcp/resource
-```
-
-#### Option B: Claude Desktop
-
-Add this to your Claude Desktop configuration (`claude_desktop_config.json`):
+Add to `claude_desktop_config.json`:
 
 ```json
 {
@@ -103,14 +127,20 @@ Add this to your Claude Desktop configuration (`claude_desktop_config.json`):
         "mcp-remote",
         "https://www.capcut.com/api/external_mcp/resource"
       ]
+    },
+    "google-flow": {
+      "command": "python",
+      "args": [
+        "/path/to/Capcut-MCP/google-flow-mcp/server.py"
+      ]
     }
   }
 }
 ```
 
-#### Option C: Cursor & Windsurf
+### Option C: Cursor & Windsurf
 
-Add this to `.cursor/mcp.json` or `.codeium/windsurf/mcp_config.json`:
+Add to `.cursor/mcp.json` or `.codeium/windsurf/mcp_config.json`:
 
 ```json
 {
@@ -123,6 +153,10 @@ Add this to `.cursor/mcp.json` or `.codeium/windsurf/mcp_config.json`:
     },
     "capcut_creation_resource": {
       "url": "https://www.capcut.com/api/external_mcp/resource"
+    },
+    "google-flow": {
+      "command": "python",
+      "args": ["google-flow-mcp/server.py"]
     }
   }
 }
@@ -130,32 +164,33 @@ Add this to `.cursor/mcp.json` or `.codeium/windsurf/mcp_config.json`:
 
 ---
 
-## Step 4: Talk to Your Agent
+## Example Prompts & Studio Workflows
 
-Once configured, your agent can edit videos naturally. Here are real prompts that work:
+### 1. The Full Studio Pipeline (Flow Generation to CapCut Cut)
+> *"Generate 3 clips with Google Flow showing an athlete running along an ocean cliffside at sunrise, shot on 35mm with slow forward tracking motility. Take those generated clips, upload them to CapCut, and cut a 20-second cinematic intro. Put bold serif titles sandwiched behind the runner, and add a single subtle sub-bass sine drop on the final title card."*
 
-### Example 1: Directing an Edit from Scratch
-> *"Take the footage in `./footage/gym_session/`. I need a 30-second high-velocity commercial. Cut on the vocal rhythm of the narrator, add title cards with bold typography behind the athlete, and keep sound design subtle with crisp clicks at chapter shifts."*
+### 2. Character Cutout with Non-Colliding Chroma Key
+> *"Generate an isolated subject in Google Flow: a founder in casual denim explaining a product, shot against a solid Royal Blue backdrop (`#0047AB`). Then import that clip into CapCut, remove the blue screen, and place them over a blurred office background plate with a 2.5D parallax push."*
 
-### Example 2: Finding Matching Styles
-> *"Look at `./references/product_shot.jpg`. Search CapCut templates for high-energy tech hardware launches with 9:16 vertical ratio and electronic synth music."*
+### 3. Directing Existing Footage
+> *"Take the footage in `./raw_clips/product_demo/`. Build a 30-second teaser. Cut on dialogue breath breaks, lead track 1 with a 300ms J-cut, suppress karaoke subtitles over graphic cards, and use tactile clicks at section boundaries."*
 
-### Example 3: Rebuilding a Local Desktop Timeline
-> *"Open my local CapCut project `draft_1788545083`. Re-time track 1 to lead dialogue by 300ms using a J-cut, remove the repetitive b-roll on scene 3, and add a subtle 1.0 to 1.05 slow scale push to the background plate."*
+### 4. Template Matching
+> *"Inspect `./references/moodboard.png`. Find CapCut templates that match this energetic pace with 9:16 vertical ratio and electronic synth audio."*
 
 ---
 
-## Directing Standards Built Into This Repo
+## Directing Standards
 
 Amateur video edits look cheap because they follow bad habits: cutting on a fixed 2.5-second clock, spamming whoosh sound effects, placing subtitles over full-frame graphics, and treating images as flat slides.
 
-The skills bundled in `skills/` enforce professional editing rules:
+The skills in `skills/` enforce production habits:
 
 1. **Audio Cadence Over Clock**: Edits cut on breath breaks, vocal pauses, or emphatic consonants, never on an arbitrary timer.
-2. **The Split-Cut Imperative**: Uses J-cuts (dialogue leads visual change by 250ms to 400ms) and L-cuts (environment audio trails past the cut) to keep transitions natural.
+2. **Split-Cut Logic**: Employs J-cuts (dialogue leads visual cuts by 250ms to 400ms) and L-cuts (ambient audio trails past the cut) to eliminate harsh transitions.
 3. **2.5D Parallax Layering**: Splits scenes into 4 planes: background plate (slow push), sandwiched typography, isolated foreground subject (faster push with drop shadow), and subtle atmospheric grain.
-4. **Strict SFX Budgeting**: Total ban on whoosh spam. Transitions use subtle tactile clicks (`ui_tap.wav`, 0.07s) and a hard limit of 3 sub-bass sine drops per video for epiphany moments.
-5. **Non-Colliding Chroma Keying**: Avoids green screen when subjects wear khaki, earth tones, or olive gear (which creates green spill on clothing). Instructs generation on Royal Blue (`#0047AB`), Neutral Grey (`#808080`), or Magenta (`#FF00FF`).
+4. **Strict SFX Budget**: Total ban on whoosh spam. Transitions use subtle tactile clicks (`ui_tap.wav`, 0.07s) and a hard cap of 3 sub-bass sine drops per video for pivotal moments.
+5. **Smart Chroma Selection**: Never default to green screen when subjects wear earth, khaki, or olive tones (which creates green edge bleed). Instructs generation on Royal Blue (`#0047AB`), Neutral Grey (`#808080`), or Magenta (`#FF00FF`).
 
 ---
 
@@ -163,39 +198,44 @@ The skills bundled in `skills/` enforce professional editing rules:
 
 ```text
 Capcut MCP/
-├── assets/
-│   └── logo.svg                    # Vector CapCut branding asset
-├── clients/                        # Ready-to-paste configurations
-│   ├── antigravity_config.json     # Antigravity & Gemini CLI snippet
-│   ├── claude_desktop_config.json  # Claude Desktop snippet
-│   └── cursor_mcp.json             # Cursor & Windsurf snippet
-├── schemas/                        # CapCut MCP tool definitions
-│   ├── editing_plan.json           # Interactive plan card schema
-│   ├── video_preview.json          # Final render card schema
-│   ├── templates_preview.json      # Template search schema
-│   ├── templates_preview_v2.json   # Preferred template search renderer
-│   ├── background_music.json       # Music selection schema
-│   ├── capcut_report_event.json    # Event telemetry schema
-│   └── instructions.md             # MCP server runtime instructions
-├── skills/                         # Agent instructions & scripts
+├── assets/                         # Vector branding assets
+├── clients/                        # Client configs (Antigravity, Claude, Cursor)
+│   ├── antigravity_config.json
+│   ├── claude_desktop_config.json
+│   └── cursor_mcp.json
+├── google-flow-mcp/                # Google Flow generation engine
+│   ├── batch_engine.py             # Concurrent & chained batch manager
+│   ├── flow_cdp_client.py          # Chrome DevTools Protocol client
+│   ├── flow_daemon.py              # Background headless browser runner
+│   ├── launch_daemon.bat           # Windows background daemon launcher
+│   ├── launch_daemon.sh            # macOS/Linux daemon launcher
+│   ├── presets.py                  # Directing styles, shot scales & backdrops
+│   ├── requirements.txt            # Python dependencies
+│   ├── server.py                   # FastMCP server exposing generation tools
+│   ├── setup_auth.bat              # One-click Windows authentication wizard
+│   ├── setup_auth.py               # Cross-platform interactive auth script
+│   └── setup_auth.sh               # One-click macOS/Linux auth wizard
+├── schemas/                        # CapCut MCP tool schemas & docs
+├── skills/                         # Directing skills & upload engines
 │   ├── ai-video-editing/           # The flagship "Edit with Words" workflow
-│   ├── capcut-desktop/             # Local desktop draft automation & dual-sync
+│   ├── capcut-desktop/             # Desktop draft automation & sync
 │   ├── capcut-mcp-auth/            # Auth setup & token inspection guide
-│   ├── capcut-upload/              # Local file upload engine & 1,691-line script
-│   └── search-templates/           # Template discovery & multimodal query pipeline
-├── mcp_config.example.json         # Example MCP configuration file
-├── mcp_config.json                 # Pre-configured endpoints for plugin loading
-├── package.json                    # Node scripts and testing commands
-├── plugin.json                     # Antigravity / Gemini plugin manifest
+│   ├── capcut-upload/              # Direct-to-ByteDance VOD upload script
+│   ├── google-flow/                # Visual generation prompt rules & styles
+│   └── search-templates/           # Template discovery & multimodal query
+├── mcp_config.example.json         # Example MCP configuration
+├── mcp_config.json                 # Pre-configured endpoints
+├── package.json                    # Project manifest
+├── plugin.json                     # Antigravity plugin manifest
 ├── LICENSE                         # MIT License
 └── README.md                       # Documentation
 ```
 
 ---
 
-## Media Upload Script
+## Standalone Media Uploader
 
-If you want to upload media files manually from your terminal without the AI agent:
+To upload media files directly from your terminal without opening an AI chat:
 
 ```bash
 # Upload a single video (outputs clean JSON with public Vid)
@@ -213,10 +253,8 @@ node skills/capcut-upload/scripts/capcut-upload.mjs \
   --json
 ```
 
-The uploader requires zero external npm packages and runs on any standard Node.js 18+ runtime.
-
 ---
 
-## Contributing & License
+## License
 
-Contributions, bug reports, and pull requests are welcome. This project is released under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).

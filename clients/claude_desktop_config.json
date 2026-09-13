@@ -18,6 +18,12 @@
         "mcp-remote",
         "https://www.capcut.com/api/external_mcp/resource"
       ]
+    },
+    "google-flow": {
+      "command": "python",
+      "args": [
+        "<PATH_TO_REPO>/google-flow-mcp/server.py"
+      ]
     }
   }
 }

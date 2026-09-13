@@ -33,3 +33,19 @@ desktop.ini
 *.ntvs*
 *.njsproj
 *.sln
+
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Google Flow Chrome Profile & Sessions
+.flow_profile/
+flow_profile/
+*.log
+

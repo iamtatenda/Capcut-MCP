@@ -82,3 +82,21 @@ Before executing edits or generating visual assets, draft a structured plan:
   - `failed`: Present the error and stop.
 - If polling fails before a successful response, retry with the same `after_event_id`. Advance only to a successfully returned `next_event_id`.
 - For a plan response, use the card's `context.session_id`, `context.card_id`, and `after_event_id`, and submit the user's exact text or selected action label exactly once. Resume with the returned session and cursor.
+
+---
+
+## 6. Full Studio Pipeline: Google Flow to CapCut Assembly
+
+When a project requires brand-new footage, stylized b-roll, or isolated subject plates, run this two-stage pipeline:
+
+### Stage A: Asset Generation via Google Flow
+1. **Define the Visual Plan**: Write prompt formulas matching the Scene Blueprint (cinematic lighting, camera motility, and proper chroma backdrops like Royal Blue `#0047AB` or neutral grey).
+2. **Generate Video or Image Clips**: Call `flow_generate_video` or `flow_generate_image` via the `google-flow` tools. For sequences, trigger multi-prompt batches with `flow_run_batch`.
+3. **Capture Output Paths**: Note the local file paths downloaded to your output folder.
+
+### Stage B: CapCut Ingestion & Automated Assembly
+1. **Upload Assets**: Use `capcut-upload` with local file paths to upload the generated clips and obtain CapCut `resource_id`s.
+2. **Draft the Edit Query**: Craft the edit instruction incorporating your Scene Blueprint (audio pacing, typographic layers, split cuts, and sound design limits).
+3. **Launch Edit**: Call `capcut_ailab_start_edit` with the list of `resource_id`s and query.
+4. **Poll & Finalize**: Poll events silently with `capcut_ailab_poll_edit_progress` until completion.
+
